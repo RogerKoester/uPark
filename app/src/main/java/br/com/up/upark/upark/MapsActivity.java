@@ -41,5 +41,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng uposorio = new LatLng(-25.4334877, -49.2758251);
         mMap.addMarker(new MarkerOptions().position(uposorio).title("Universidade Positivo - Praça Osório"));
+
     }
 }
