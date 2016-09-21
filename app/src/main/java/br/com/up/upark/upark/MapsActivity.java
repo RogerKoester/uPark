@@ -88,17 +88,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng estacio2position = new LatLng(-25.3848178,-49.2597539);
         LatLng estacio3position = new LatLng(-25.4334877,-49.2758251);
 
+        String preco1 = "25 R$/Hr";
+        String preco2 = "20 R$/Hr";
+        String preco3 = "15 R$/Hr";
+
         String up = "Universidade Positivo - Osório" ;
         String e1 = "Estacionamento 1";
         String e2 = "Estacionamento 2";
 
-        String horario1 = "06:00 - 22:00";
-        String horario2 = "07:00 - 23:00";
-        String horario3 = "08:00 - 00:00";
+        String horario1 = "06:00 - 22:00\n" + preco1;
+        String horario2 = "07:00 - 23:00\n "+ preco2;
+        String horario3 = "08:00 - 00:00\n "+preco3;
 
-        String preco1 = " 25 R$/Hr";
-        String preco2 = " 20 R$/Hr";
-        String preco3 = " 15 R$/Hr";
+
 
         final Marker estacio1 = mMap.addMarker(new MarkerOptions()
                 .position(estacio1position)
