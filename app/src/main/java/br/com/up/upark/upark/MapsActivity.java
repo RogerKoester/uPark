@@ -1,6 +1,7 @@
 package br.com.up.upark.upark;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -123,9 +124,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                String horario = marker.getSnippet();
+                String nome = marker.getTitle();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                builder.setTitle("Reserva");
+                builder.setMessage("Você deseja realizar uma reserva em " + nome + "?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(getBaseContext(), "Reserva realizado", Toast.LENGTH_SHORT).show();
 
-                Intent intent=new Intent(MapsActivity.this,Reserva.class);
-                startActivity(intent);
+                    }
+                });
+                AlertDialog reserva = builder.create();
+                reserva.show();
+
+                // Intent intent=new Intent(MapsActivity.this,Reserva.class);
+                // startActivity(intent);
             }
         });
 
