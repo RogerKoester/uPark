@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(senha.equals("macaco") || usuario.equals("macaco")){
+        //if(senha.equals("macaco") || usuario.equals("macaco")){
             Intent intent = new Intent(getBaseContext(), MapsActivity.class);
             startActivity(intent);
-        }
-        else{
-            Toast.makeText(getBaseContext(), "Senha ou usuario errados!", Toast.LENGTH_SHORT).show();
-        }
+        //}
+        //else{
+           // Toast.makeText(getBaseContext(), "Senha ou usuario errados!", Toast.LENGTH_SHORT).show();
+        //}
     }
 }

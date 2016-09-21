@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +68,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                View v = getLayoutInflater().inflate(R.layout.info_window,null);
+                ImageView img = (ImageView) v.findViewById(R.id.imageView2);
+                TextView nome = (TextView) v.findViewById(R.id.textView6);
+                TextView horario = (TextView) v.findViewById(R.id.textView7);
+                TextView obs = (TextView) v.findViewById(R.id.textView8);
+                nome.setText(marker.getTitle());
+                horario.setText(marker.getSnippet());
+                return v;
+            }
+        });
+
         // Add a marker in Sydney and move the camera
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -93,17 +114,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String horario2 = "07:00 - 23:00";
         String horario3 = "08:00 - 00:00";
 
+        String preco1 = "25 R$/Hr";
+        String preco2 = "20 R$/Hr";
+        String preco3 = "15 R$/Hr";
+
         final Marker estacio1 = mMap.addMarker(new MarkerOptions()
                 .position(estacio1position)
                 .title(e1)
                 .snippet(horario1));
 
-        Marker estacio2 = mMap.addMarker(new MarkerOptions()
+        final Marker estacio2 = mMap.addMarker(new MarkerOptions()
                 .position(estacio2position)
                 .title(e2)
                 .snippet(horario2));
 
-        Marker estacio3 = mMap.addMarker(new MarkerOptions()
+        final Marker estacio3 = mMap.addMarker(new MarkerOptions()
                 .position(estacio3position)
                 .title(up)
                 .snippet(horario3));
@@ -126,15 +151,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onInfoWindowClick(Marker marker) {
                 String horario = marker.getSnippet();
                 String nome = marker.getTitle();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                builder.setTitle("Reserva");
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                builder.setTitle(nome);
                 builder.setMessage("Você deseja realizar uma reserva em " + nome + "?");
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(getBaseContext(), "Reserva realizado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Reserva realizada", Toast.LENGTH_SHORT).show();
 
                     }
                 });
+                builder.setNegativeButton("Cancelar",null);
                 AlertDialog reserva = builder.create();
                 reserva.show();
 
@@ -142,24 +168,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // startActivity(intent);
             }
         });
-
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-
-
-
-
-
-                return null;
-            }
-        });
-
 
         mMap.setMyLocationEnabled(true);
 
