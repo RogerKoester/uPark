@@ -68,27 +68,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return null;
-            }
 
-            @Override
-            public View getInfoContents(Marker marker) {
 
-                View v = getLayoutInflater().inflate(R.layout.info_window,null);
-                ImageView img = (ImageView) v.findViewById(R.id.imageView2);
-                TextView nome = (TextView) v.findViewById(R.id.textView6);
-                TextView horario = (TextView) v.findViewById(R.id.textView7);
-                TextView obs = (TextView) v.findViewById(R.id.textView8);
-                nome.setText(marker.getTitle());
-                horario.setText(marker.getSnippet());
-                return v;
-            }
-        });
 
-        // Add a marker in Sydney and move the camera
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -114,9 +96,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String horario2 = "07:00 - 23:00";
         String horario3 = "08:00 - 00:00";
 
-        String preco1 = "25 R$/Hr";
-        String preco2 = "20 R$/Hr";
-        String preco3 = "15 R$/Hr";
+        String preco1 = " 25 R$/Hr";
+        String preco2 = " 20 R$/Hr";
+        String preco3 = " 15 R$/Hr";
 
         final Marker estacio1 = mMap.addMarker(new MarkerOptions()
                 .position(estacio1position)
@@ -166,6 +148,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 // Intent intent=new Intent(MapsActivity.this,Reserva.class);
                 // startActivity(intent);
+            }
+        });
+
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                View v = getLayoutInflater().inflate(R.layout.info_window,null);
+                ImageView img = (ImageView) v.findViewById(R.id.imageView2);
+                TextView nome = (TextView) v.findViewById(R.id.textView6);
+                TextView horario = (TextView) v.findViewById(R.id.textView7);
+                TextView obs = (TextView) v.findViewById(R.id.textView8);
+                nome.setText(marker.getTitle());
+                horario.setText(marker.getSnippet());
+                obs.setText("Clique no balão para reservar");
+                return v;
             }
         });
 
