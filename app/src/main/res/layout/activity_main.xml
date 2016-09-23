@@ -17,7 +17,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="180dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:inputType="textVisiblePassword" />
 
     <EditText
         android:layout_width="match_parent"
