@@ -218,4 +218,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         client.disconnect();
     }
 
+    public void LocalizarEstacionamento(LatLng CoordEstacio,String NomeEstacio, String EndereçoEstacionamento){
+
+    }
+
 }
