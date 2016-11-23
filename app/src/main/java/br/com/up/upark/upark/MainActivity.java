@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         EditText edt2 = (EditText) findViewById(R.id.editText2);
         senha = edt2.getText().toString();
 
-        new JSONTask().execute("http://jsonparsing.parseapp.com/jsonData/moviesDemoList.txt");
+        new JSONTask().execute("http://beta.json-generator.com/api/json/get/NJUMbRRbM");
 
 
 
@@ -89,23 +89,32 @@ public class MainActivity extends AppCompatActivity {
 
                 String finalJSON = buffer.toString();
                 JSONObject parentObject = new JSONObject(finalJSON);
-                JSONArray parentArray = parentObject.getJSONArray("movies");
+                JSONArray parentArray = parentObject.getJSONArray("value");
                 StringBuffer finalBufferedData = new StringBuffer();
                 for (int i = 0; i < parentArray.length(); i++) {
 
                     JSONObject finalObject = parentArray.getJSONObject(i);
-                    String userJson = finalObject.getString("movie");
-                    String senhaJson = String.valueOf(finalObject.getInt("year"));
+                    int idJson = finalObject.getInt("UsuarioId");
+                    String nomeJson = finalObject.getString("Nome");
+                    String dataJson = finalObject.getString("DataNasc");
+                    int cpfJson = finalObject.getInt("CPF");
+                    String emailJson = finalObject.getString("Email");
+                    String senhaJson = finalObject.getString("Senha");
 
 
-                    if (userJson.equals(usuario) && senhaJson.equals(senha)) {
-                        user.setNome(userJson);
+
+                    if (nomeJson.equals(usuario) && senhaJson.equals(senha)) {
+                        user.setNome(nomeJson);
                         user.setSenha(senhaJson);
+                        user.setCPF(cpfJson);
+                        user.setEmail(emailJson);
+                        user.setDataNasc(dataJson);
+                        user.setUsuarioId(idJson);
                         break;
                     }
 
                 }
-                return (user.nome + user.senha);
+                return (user.Nome + user.Senha);
 
 
 
@@ -134,13 +143,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            TextView textView = (TextView) findViewById(R.id.textView3);
-            textView.setText(result);
             EditText edt1 = (EditText) findViewById(R.id.editText);
             usuario = edt1.getText().toString();
             EditText edt2 = (EditText) findViewById(R.id.editText2);
             senha = edt2.getText().toString();
-            if (senha.equals(user.senha) && usuario.equals(user.nome)) {
+            if (senha.equals(user.Senha) && usuario.equals(user.Nome)) {
                 Intent intent = new Intent(getBaseContext(), MapsActivity.class);
                 startActivity(intent);
             } else {
