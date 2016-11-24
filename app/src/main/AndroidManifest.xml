@@ -54,6 +54,20 @@
             android:name=".Reserva"
             android:label="@string/title_activity_reserva"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ItemListActivity"
+            android:label="@string/title_item_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ItemDetailActivity"
+            android:label="@string/title_item_detail"
+            android:parentActivityName=".ItemListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.up.upark.upark.ItemListActivity" />
+        </activity>
+        <activity android:name=".ReservaActivity" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -44,9 +45,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient client;
 
 
+    public List<Estacionamento> estacionamentoListMap = new ArrayList<Estacionamento>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +111,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onInfoWindowClick(Marker marker) {
                 String horario = marker.getSnippet();
                 String nome = marker.getTitle();
+                Estacionamento estacionamentoReserva = new Estacionamento();
+                for(Estacionamento estacionamento : estacionamentoListMap){
+                    if((estacionamento.getNome().equals(nome)) && (estacionamento.getHorarioFuncio().equals(horario))){
+                        estacionamentoReserva = estacionamento;
+                        break;
+                    }
+                }
+
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                builder.setTitle(nome);
-                builder.setMessage("Você deseja realizar uma reserva em " + nome + "?");
+                builder.setTitle(estacionamentoReserva.getNome());
+                builder.setMessage("Você deseja realizar uma reserva em " + estacionamentoReserva.getNome() + "?");
+                final Estacionamento finalEstacionamentoReserva = estacionamentoReserva;
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+                        Intent intent = new Intent(getBaseContext(), Reserva.class);
+                        intent.putExtra("estacionamentoReserva", (Parcelable) finalEstacionamentoReserva);
                         startActivity(intent);
-
                         //Toast.makeText(getBaseContext(), "Reserva realizada", Toast.LENGTH_SHORT).show();
 
                     }
@@ -236,14 +249,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onPostExecute(estacionamentos);
             MarkerOptions options = new MarkerOptions();
             for(Estacionamento estacionamento : estacionamentos){
-
+                DecimalFormat preco = new DecimalFormat();
                 options.position(estacionamento.getLatLng());
                 options.title(estacionamento.getNome());
-                options.snippet(estacionamento.getHorarioFuncio());
+                options.snippet("Horário de funcionamento: "+estacionamento.getHorarioFuncio()+"\n Primeira hora: " +String.valueOf(estacionamento.getPreco()));
                 mMap.addMarker(options);
 
 
             }
+            estacionamentoListMap = estacionamentos;
         }
     }
 
