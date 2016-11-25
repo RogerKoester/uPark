@@ -25,15 +25,17 @@ public class Estacionamento implements Parcelable{
     public String CNPJ;
     public double Preco;
     public int EstacionamentoId;
-    public double Credito;
 
-    public double getCredito() {
-        return Credito;
+
+    public int getRating() {
+        return Rating;
     }
 
-    public void setCredito(double credito) {
-        Credito = credito;
+    public void setRating(int rating) {
+        Rating = rating;
     }
+
+    public int Rating;
 
     protected Estacionamento(Parcel in) {
         Nome = in.readString();

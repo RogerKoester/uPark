@@ -54,31 +54,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
     private GoogleMap mMap;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
-
-
     public List<Estacionamento> estacionamentoListMap = new ArrayList<Estacionamento>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
 
     }
 
@@ -90,8 +76,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
-
-
         }
 
 
@@ -109,11 +93,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                String horario = marker.getSnippet();
                 String nome = marker.getTitle();
                 Estacionamento estacionamentoReserva = new Estacionamento();
                 for(Estacionamento estacionamento : estacionamentoListMap){
-                    if((estacionamento.getNome().equals(nome)) && (estacionamento.getHorarioFuncio().equals(horario))){
+                    if((estacionamento.getNome().equals(nome))){
                         estacionamentoReserva = estacionamento;
                         break;
                     }
@@ -127,6 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onClick(DialogInterface arg0, int arg1) {
 
                         Intent intent = new Intent(getBaseContext(), Reserva.class);
+                        Location location = mMap.getMyLocation();
                         intent.putExtra("estacionamentoReserva", (Parcelable) finalEstacionamentoReserva);
                         startActivity(intent);
                         //Toast.makeText(getBaseContext(), "Reserva realizada", Toast.LENGTH_SHORT).show();
@@ -136,9 +120,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 builder.setNegativeButton("Cancelar",null);
                 AlertDialog reserva = builder.create();
                 reserva.show();
-
-                // Intent intent=new Intent(MapsActivity.this,Reserva.class);
-                // startActivity(intent);
             }
         });
 
@@ -164,14 +145,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         mMap.setMyLocationEnabled(true);
-
-
-
-
-
-
-
-
 
     }
     private class JSONTask extends AsyncTask<String, String, List<Estacionamento>> {
@@ -215,6 +188,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     estacionamento.setNome(finalObject.getString("Nome"));
                     estacionamento.setEstacionamentoId(finalObject.getInt("EstacionamentoId"));
                     estacionamento.setLatLng(conversor.getLocationFromAddress(MapsActivity.this, estacionamento.getEndereco()));
+                    estacionamento.setRating(4);
                     estacionamentoList.add(estacionamento);
 
 
@@ -252,7 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 DecimalFormat preco = new DecimalFormat();
                 options.position(estacionamento.getLatLng());
                 options.title(estacionamento.getNome());
-                options.snippet("Horário de funcionamento: "+estacionamento.getHorarioFuncio()+"\n Primeira hora: " +String.valueOf(estacionamento.getPreco()));
+                options.snippet("Horário de funcionamento: "+estacionamento.getHorarioFuncio()+"\n Primeira hora: " +String.valueOf(estacionamento.getPreco())+"R$");
                 mMap.addMarker(options);
 
 

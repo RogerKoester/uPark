@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         EditText edt2 = (EditText) findViewById(R.id.editText2);
         senha = edt2.getText().toString();
 
-        new JSONTask().execute("http://beta.json-generator.com/api/json/get/NJUMbRRbM");
+        new JSONTask().execute("http://beta.json-generator.com/api/json/get/NkgBLrWGG");
 
 
 
@@ -89,15 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
                 String finalJSON = buffer.toString();
                 JSONObject parentObject = new JSONObject(finalJSON);
-                JSONArray parentArray = parentObject.getJSONArray("value");
+                JSONArray parentArray = parentObject.getJSONArray("Usuarios");
                 StringBuffer finalBufferedData = new StringBuffer();
                 for (int i = 0; i < parentArray.length(); i++) {
 
                     JSONObject finalObject = parentArray.getJSONObject(i);
-                    int idJson = finalObject.getInt("UsuarioId");
-                    String nomeJson = finalObject.getString("Nome");
                     String dataJson = finalObject.getString("DataNasc");
                     int cpfJson = finalObject.getInt("CPF");
+                    int idJson = finalObject.getInt("UsuarioId");
+                    String nomeJson = finalObject.getString("Nome");
                     String emailJson = finalObject.getString("Email");
                     String senhaJson = finalObject.getString("Senha");
 

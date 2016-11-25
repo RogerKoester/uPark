@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Senha"
-        android:id="@+id/textView"
+        android:id="@+id/textView9"
         android:layout_alignBottom="@+id/editText2"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="42dp" />
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Usuário"
-        android:id="@+id/textView2"
+        android:id="@+id/textView10"
         android:layout_above="@+id/editText"
         android:layout_centerHorizontal="true" />
 
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:id="@+id/button"
+        android:id="@+id/button6"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="login"
@@ -64,7 +64,7 @@
         android:id="@+id/imageView"
         android:src="@drawable/logo"
         android:layout_marginBottom="50dp"
-        android:layout_above="@+id/textView2"
+        android:layout_above="@+id/textView10"
         android:layout_centerInParent="true"
         android:layout_marginLeft="10dp" />
 
